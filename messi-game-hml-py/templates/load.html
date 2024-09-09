@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>CodePen - Vanilla Physics</title>
+
+    <link rel="canonical" href="https://codepen.io/Stuey192/pen/LGXbqB">
+  
+  
+  
+  
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800);
+
+body {
+  background-image:url(http://orig09.deviantart.net/cd43/f/2011/047/7/b/blue_checkered_background_by_mariomario54321-d39pgf5.png);
+}
+
+p {
+  padding: 10%;
+  max-width: 50%;
+  color: white;
+  font-family: "Open Sans";
+  font-weight: 800;
+}
+
+#sonic{
+  position: absolute;
+  bottom: 0px;
+  left:0px;
+  width: 128px;
+  height: 128px; 
+  background-image: url(http://orig04.deviantart.net/6478/f/2012/270/c/c/oldschool_sonic_sprite__take_ii_by_logic_monkey-d5g48mo.png);
+  background-position: 0 12px;
+}
+
+.loader {
+    width: 120px;
+    height: 20px;
+    border-radius: 20px;
+    background:
+     linear-gradient(orange 0 0) 0/0% no-repeat
+     lightblue;
+    animation: l2 2s infinite steps(10);
+  }
+  @keyframes l2 {
+      100% {background-size:110%}
+  }
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <html>
+<body>
+  <p>Simple demo of velocity and acceleration on the X axis using some vanilla javaScript. Keyboard inputs for movment, SPACE to do a flip.</p>
+  <div class="loader"></div> 
+
+  <div id="sonic"><div>
+</body>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
+<script src='https://cdn.jsdelivr.net/keyboardjs/0.4.2/keyboard.js'></script>
+      <script id="rendered-js" >
+window.onload = function () {
+
+  var dot = document.getElementById('sonic');
+
+  var isFacingRight = true;
+  var isMovingRight = false;
+  var isMovingLeft = false;
+  var isJumping = false;
+  var isRotating = false;
+
+  // position
+  var x = 0;
+  // velocity
+  var maxV = 10;
+  var vx = 0;
+  // acceleration
+  var ax = 0.5;
+
+  KeyboardJS.on('up', jump);
+
+  function jump() {
+    if (!isJumping) {
+      isJumping = true;
+      TweenMax.to(dot, 0.3, { css: { bottom: 100 }, repeat: 1, yoyo: true, ease: Power1.easeInOut, onComplete: function () {isJumping = false;} });
+    }
+  }
+
+  KeyboardJS.on("space", rotate);
+
+  function rotate() {
+    if (!isRotating &amp;&amp; isJumping) {
+
+      var direction = "+=360";
+      if (!isFacingRight)
+      direction = "-=360";
+
+      isRotating = true;
+      TweenMax.to(dot, 0.6, { rotation: direction, ease: Power1.easeOut, onComplete: function () {isRotating = false;} });
+    }
+  }
+
+  KeyboardJS.on('right', moveRight, stopMoveRight);
+
+  function moveRight() {
+    isMovingRight = true;
+    isFacingRight = true;
+    TweenMax.set(dot, { rotationY: 0 });
+  }
+
+  function stopMoveRight() {
+    isMovingRight = false;
+  }
+
+  KeyboardJS.on('left', moveLeft, stopMoveLeft);
+
+  function moveLeft() {
+    isMovingLeft = true;
+    isFacingRight = false;
+    TweenMax.set(dot, { rotationY: 180 });
+  }
+    
+
+  function stopMoveLeft() {
+    isMovingLeft = false;
+  }
+
+  TweenMax.ticker.addEventListener("tick", tickEvent);
+
+  function tickEvent() {
+
+    if (isMovingRight) {
+      if (vx <= maxV &amp;&amp; !isJumping) {
+        vx += ax;
+      }
+    } else if (isMovingLeft) {
+      if (vx >= maxV * -1 &amp;&amp; !isJumping) {
+        vx -= ax;
+      }
+    } else {
+      if (vx > 0) {
+        vx -= ax;
+      } else if (vx < 0) {
+        vx += ax;
+      }
+    }
+
+    vx = Math.round(vx * 100) / 100;
+    x += vx;
+    dot.style.left = x + "px";
+  }
+};
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>

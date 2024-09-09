@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+
+  <script
+    src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js">
+    </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+
+  <meta name="apple-mobile-web-app-title" content="CodePen">
+
+  <link rel="shortcut icon" type="image/x-icon"
+    href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+  <link rel="mask-icon" type="image/x-icon"
+    href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg"
+    color="#111" />
+
+
+  <script
+    src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js">
+    </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700&amp;subset=latin-ext");
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Open Sans";
+      font-size: 14px;
+      font-weight: 400;
+      overflow: hidden;
+      background-color: #f3f3f3;
+      color: #102c58;
+    }
+
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    ::-webkit-input-placeholder {
+      color: #c3c3c3;
+    }
+
+    p {
+      color: #ababab;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    .u-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .u-input {
+      outline: 0;
+      border: 1px solid #d0d0d0;
+      padding: 5px 10px;
+      height: 35px;
+      font-size: 12px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background-clip: padding-box;
+    }
+
+    .c-badge {
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 20px;
+      padding: 5px;
+      border-radius: 4px;
+      display: block;
+      line-height: 0.7;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      background-color: #102c58;
+      border: 1px solid #0c2142;
+    }
+
+    .c-badge--red {
+      background-color: #f91605;
+      border: 1px solid #e01404;
+    }
+
+    .c-badge--blue {
+      background-color: #5f9cfd;
+      border: 1px solid #468cfd;
+    }
+
+    .c-badge--header-icon {
+      position: absolute;
+      bottom: -9px;
+    }
+
+    .tooltip {
+      width: 120px;
+    }
+
+    .tooltip-inner {
+      padding: 8px 10px;
+      color: #fff;
+      text-align: center;
+      background-color: #051835;
+      font-size: 12px;
+      border-radius: 3px;
+    }
+
+    .tooltip-arrow {
+      border-right-color: #051835 !important;
+    }
+
+    .hamburger-toggle {
+      position: relative;
+      padding: 0;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      order: 1;
+    }
+
+    .hamburger-toggle [class*=bar-] {
+      display: block;
+      background: #102c58;
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+      -webkit-transition: 0.2s ease all;
+      transition: 0.2s ease all;
+      border-radius: 2px;
+      height: 2px;
+      width: 24px;
+      margin-bottom: 4px;
+    }
+
+    .hamburger-toggle [class*=bar-]:nth-child(2) {
+      width: 18px;
+    }
+
+    .hamburger-toggle [class*=bar-]:last-child {
+      margin-bottom: 0;
+      width: 12px;
+    }
+
+    .hamburger-toggle.is-opened {
+      left: 3px;
+    }
+
+    .hamburger-toggle.is-opened [class*=bar-] {
+      background: #102c58;
+    }
+
+    .hamburger-toggle.is-opened .bar-top {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      -webkit-transform-origin: 15% 15%;
+      transform-origin: 15% 15%;
+    }
+
+    .hamburger-toggle.is-opened .bar-mid {
+      opacity: 0;
+    }
+
+    .hamburger-toggle.is-opened .bar-bot {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(-45deg);
+      -webkit-transform-origin: 15% 95%;
+      transform-origin: 15% 95%;
+      width: 24px;
+    }
+
+    .hamburger-toggle:focus {
+      outline-width: 0;
+    }
+
+    .header-icons-group {
+      display: flex;
+      order: 3;
+      margin-left: auto;
+      height: 100%;
+      border-left: 1px solid #cccccc;
+    }
+
+    .header-icons-group .c-header-icon:last-child {
+      border-right: 0;
+    }
+
+    .c-header-icon {
+      position: relative;
+      display: flex;
+      flex-shrink: 0;
+      float: left;
+      width: 70px;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      cursor: pointer;
+      border-right: 1px solid #cccccc;
+    }
+
+    .c-header-icon svg {
+      font-size: 18px;
+      line-height: 40px;
+    }
+
+    .c-header-icon--in-circle {
+      border: 1px solid #d0d0d0;
+      border-radius: 100%;
+    }
+
+    .c-header-icon:hover svg {
+      color: #f5642d;
+    }
+
+    .c-header-icon:hover [class*=bar-] {
+      background: #f5642d;
+    }
+
+    .l-header {
+      padding-left: 70px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      width: 100%;
+      background: #ffffff;
+      -webkit-transition: padding 0.5s ease-in-out;
+      -moz-transition: padding 0.5s ease-in-out;
+      -ms-transition: padding 0.5s ease-in-out;
+      -o-transition: padding 0.5s ease-in-out;
+      transition: padding 0.5s ease-in-out;
+    }
+
+    .l-header__inner {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      height: 70px;
+      align-items: center;
+      justify-content: stretch;
+      border-bottom: 1px solid;
+      border-color: #cccccc;
+    }
+
+    .sidebar-is-expanded .l-header {
+      padding-left: 220px;
+    }
+
+    .c-search {
+      display: flex;
+      flex-grow: 1;
+      height: 100%;
+    }
+
+    .c-search__input {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-right: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      font-size: 14px;
+      padding: 0 20px;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -ms-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .c-dropdown {
+      opacity: 0;
+      text-align: left;
+      position: absolute;
+      flex-direction: column;
+      display: none;
+      width: 300px;
+      top: 30px;
+      right: -40px;
+      background-color: #fff;
+      overflow: hidden;
+      min-height: 300px;
+      border: 1px solid #d0d0d0;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background-clip: padding-box;
+      -webkit-box-shadow: 0px 5px 14px -1px #cecece;
+      -moz-box-shadow: 0px 5px 14px -1px #cecece;
+      box-shadow: 0px 5px 14px -1px #cecece;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -ms-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .l-sidebar {
+      width: 70px;
+      position: absolute;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: #102c58;
+      -webkit-transition: width 0.5s ease-in-out;
+      -moz-transition: width 0.5s ease-in-out;
+      -ms-transition: width 0.5s ease-in-out;
+      -o-transition: width 0.5s ease-in-out;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .l-sidebar .logo {
+      width: 100%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #051835;
+    }
+
+    .l-sidebar .logo .logo__txt {
+      font-size: 26px;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .l-sidebar__content {
+      height: 100%;
+      position: relative;
+    }
+
+    .sidebar-is-expanded .l-sidebar {
+      width: 220px;
+    }
+
+    .c-menu>ul {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .c-menu>ul .c-menu__item {
+      color: #184a98;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .c-menu>ul .c-menu__item__inner {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      min-height: 60px;
+      position: relative;
+      cursor: pointer;
+      -webkit-transition: background-color 0.5s ease-in-out;
+      -moz-transition: background-color 0.5s ease-in-out;
+      -ms-transition: background-color 0.5s ease-in-out;
+      -o-transition: background-color 0.5s ease-in-out;
+      transition: background-color 0.5s ease-in-out;
+    }
+
+    .c-menu>ul .c-menu__item__inner:before {
+      position: absolute;
+      content: " ";
+      height: 0;
+      width: 2px;
+      left: 0;
+      top: 50%;
+      margin-top: -18px;
+      background-color: #5f9cfd;
+      opacity: 0;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .c-menu>ul .c-menu__item.is-active {
+      color: #fff;
+    }
+
+    .c-menu>ul .c-menu__item.is-active .c-menu__item__inner {
+      border-left-color: #fff;
+      background-color: #1e3e6f;
+    }
+
+    .c-menu>ul .c-menu__item.is-active .c-menu__item__inner svg {
+      color: #fff;
+    }
+
+    .c-menu>ul .c-menu__item.is-active .c-menu__item__inner .c-menu-item__title span {
+      color: #fff;
+    }
+
+    .c-menu>ul .c-menu__item.is-active .c-menu__item__inner:before {
+      height: 36px;
+      opacity: 1;
+    }
+
+    .c-menu>ul .c-menu__item:not(.is-active):hover {
+      color: #fff;
+    }
+
+    .c-menu>ul .c-menu__item:not(.is-active):hover .c-menu__item__inner {
+      background-color: #f5642d;
+      border-left-color: #f5642d;
+    }
+
+    .c-menu>ul .c-menu__item svg {
+      flex: 0 0 70px;
+      font-size: 16px;
+      font-weight: normal;
+      text-align: center;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu-item__expand {
+      position: relative;
+      left: 100px;
+      padding-right: 20px;
+      color: #fff;
+      margin-left: auto;
+      -webkit-transition: left 1s ease-in-out;
+      -moz-transition: left 1s ease-in-out;
+      -ms-transition: left 1s ease-in-out;
+      -o-transition: left 1s ease-in-out;
+      transition: left 1s ease-in-out;
+    }
+
+    .sidebar-is-expanded .c-menu>ul .c-menu__item .c-menu-item__expand {
+      left: 0px;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu-item__title {
+      flex-basis: 100%;
+      padding-right: 10px;
+      position: relative;
+      color: #fff;
+      left: 220px;
+      opacity: 0;
+      -webkit-transition: all 0.7s ease-in-out;
+      -moz-transition: all 0.7s ease-in-out;
+      -ms-transition: all 0.7s ease-in-out;
+      -o-transition: all 0.7s ease-in-out;
+      transition: all 0.7s ease-in-out;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu-item__title span {
+      font-weight: 400;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-transition: left 0.5s ease-in-out;
+      -moz-transition: left 0.5s ease-in-out;
+      -ms-transition: left 0.5s ease-in-out;
+      -o-transition: left 0.5s ease-in-out;
+      transition: left 0.5s ease-in-out;
+    }
+
+    .sidebar-is-expanded .c-menu>ul .c-menu__item .c-menu-item__title {
+      left: 0px;
+      opacity: 1;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu__submenu {
+      background-color: #051835;
+      padding: 15px;
+      font-size: 12px;
+      display: none;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu__submenu li {
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid;
+      border-color: #072048;
+      color: #5f9cfd;
+    }
+
+    .c-menu>ul .c-menu__item .c-menu__submenu li:last-child {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    main.l-main {
+      width: 100%;
+      height: 100%;
+      padding: 70px 0 0 70px;
+      -webkit-transition: padding 0.5s ease-in-out;
+      -moz-transition: padding 0.5s ease-in-out;
+      -ms-transition: padding 0.5s ease-in-out;
+      -o-transition: padding 0.5s ease-in-out;
+      transition: padding 0.5s ease-in-out;
+    }
+
+    main.l-main .content-wrapper {
+      padding: 25px;
+      height: 100%;
+      overflow: auto;
+    }
+
+    main.l-main .content-wrapper .page-content {
+      border-top: 1px solid #d0d0d0;
+      padding-top: 25px;
+      color: #ababab;
+    }
+
+    main.l-main .content-wrapper--with-bg .page-content {
+      background: #fff;
+      border-radius: 3px;
+      border: 1px solid #d0d0d0;
+      padding: 25px;
+    }
+
+    /* Estilos para cambiar de secciones del admin */
+    .content-wrapper {
+      padding: 20px;
+      background: #f5f5f5;
+      display: none;
+    }
+
+    .content-wrapper.active {
+      display: block;
+    }
+
+    .c-menu__item__inner {
+      cursor: pointer;
+    }
+
+    main.l-main .page-title {
+      font-weight: 400;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .sidebar-is-expanded main.l-main {
+      padding-left: 220px;
+    }
+
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --hue: 223;
+      --bg: hsl(var(--hue), 10%, 70%);
+      --fg: hsl(var(--hue), 10%, 10%);
+      --primary: hsl(var(--hue), 90%, 50%);
+      --trans-dur: 0.3s;
+      font-size: calc(16px + (48 - 16) * (100vw - 320px) / (2560 - 320));
+    }
+
+    body html {
+      background-color: var(--bg);
+      background-image: linear-gradient(-45deg, hsla(var(--hue), 10%, 10%, 0.4), hsla(var(--hue), 10%, 10%, 0));
+      color: var(--fg);
+      display: flex;
+      font: 1em/1.5 sans-serif;
+      height: 100vh;
+      transition:
+        background-color var(--trans-dur),
+        color var(--trans-dur);
+    }
+
+    .clock {
+      background-color: hsl(var(--hue), 10%, 80%);
+      background-image: linear-gradient(150deg, hsla(var(--hue), 10%, 10%, 0), hsl(var(--hue), 10%, 10%));
+      border-radius: 0.25em;
+      box-shadow:
+        0 0 0 0.125em hsla(var(--hue), 10%, 10%, 0.3) inset,
+        0 0.25em 0.5em hsla(var(--hue), 10%, 10%, 0.7);
+      font-size: 0.6em;
+      margin: auto;
+      width: 25em;
+      height: 6.5em;
+      transition: background-color var(--trans-dur);
+
+    }
+
+    .clock__colon,
+    .clock__slash,
+    .clock__space {
+      margin: 0 0.25em;
+      width: 1em;
+      height: 3.5em;
+    }
+
+    .clock__colon:before,
+    .clock__digit:before,
+    .clock__slash:before {
+      border-radius: 50%;
+      color: hsl(3, 90%, 50%);
+      content: "";
+      display: block;
+      margin: 0.0625em;
+      width: 0.375em;
+      height: 0.375em;
+    }
+
+    .clock__colon:before {
+      box-shadow:
+        0 0.5em 0, 0.5em 0.5em 0,
+        0 1em 0, 0.5em 1em 0,
+        0 2em 0, 0.5em 2em 0,
+        0 2.5em 0, 0.5em 2.5em 0;
+    }
+
+    .clock__digits {
+      animation: digitsMarquee 10s steps(165) infinite;
+      display: flex;
+    }
+
+    .clock__digit,
+    .clock__slash {
+      margin: 0 0.25em;
+      width: 2.5em;
+      height: 3.5em;
+    }
+
+    [data-digit=" "] {
+      display: none;
+    }
+
+    [data-digit="0"]:before {
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 1.5em 1em 0, 2em 1em 0,
+        0 1.5em 0, 1em 1.5em 0, 2em 1.5em 0,
+        0 2em 0, 0.5em 2em 0, 2em 2em 0,
+        0 2.5em 0, 2em 2.5em 0,
+        0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="1"]:before {
+      box-shadow:
+        1em 0 0,
+        0.5em 0.5em 0, 1em 0.5em 0,
+        0 1em 0, 1em 1em 0,
+        1em 1.5em 0,
+        1em 2em 0,
+        1em 2.5em 0,
+        0 3em 0, 0.5em 3em 0, 1em 3em 0, 1.5em 3em 0, 2em 3em 0;
+    }
+
+    [data-digit="2"]:before {
+      background-color: currentColor;
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        2em 0.5em 0,
+        2em 1em 0,
+        0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        0 2em 0,
+        0 2.5em 0,
+        0 3em 0, 0.5em 3em 0, 1em 3em 0, 1.5em 3em 0, 2em 3em 0;
+    }
+
+    [data-digit="3"]:before {
+      background-color: currentColor;
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        2em 0.5em 0,
+        2em 1em 0,
+        0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        2em 2em 0,
+        2em 2.5em 0,
+        0 3em 0, 0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="4"]:before {
+      box-shadow:
+        2em 0 0,
+        1.5em 0.5em 0, 2em 0.5em 0,
+        1em 1em 0, 2em 1em 0,
+        0.5em 1.5em 0, 2em 1.5em 0,
+        0 2em 0, 0.5em 2em 0, 1em 2em 0, 1.5em 2em 0, 2em 2em 0,
+        2em 2.5em 0,
+        2em 3em 0;
+    }
+
+    [data-digit="5"]:before {
+      background-color: currentColor;
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0, 2em 0 0,
+        0 0.5em 0,
+        0 1em 0,
+        0 1.5em 0, 0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        2em 2em 0,
+        2em 2.5em 0,
+        0 3em 0, 0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="6"]:before {
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0,
+        0 1em 0,
+        0 1.5em 0, 0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        0 2em 0, 2em 2em 0,
+        0 2.5em 0, 2em 2.5em 0,
+        0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="7"]:before {
+      background-color: currentColor;
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0, 2em 0 0,
+        2em 0.5em 0,
+        2em 1em 0,
+        1.5em 1.5em 0,
+        1em 2em 0,
+        1em 2.5em 0,
+        1em 3em 0;
+    }
+
+    [data-digit="8"]:before {
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 2em 1em 0,
+        0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        0 2em 0, 2em 2em 0,
+        0 2.5em 0, 2em 2.5em 0,
+        0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="9"]:before {
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 2em 1em 0,
+        0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0, 2em 1.5em 0,
+        2em 2em 0,
+        2em 2.5em 0,
+        0.5em 3em 0, 1em 3em 0, 1.5em 3em 0;
+    }
+
+    [data-digit="A"]:before {
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 2em 1em 0,
+        0 1.5em 0, 0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0, 2em 1.5em 0,
+        0 2em 0, 2em 2em 0,
+        0 2.5em 0, 2em 2.5em 0,
+        0 3em 0, 2em 3em 0;
+    }
+
+    [data-digit="P"]:before {
+      background-color: currentColor;
+      box-shadow:
+        0.5em 0 0, 1em 0 0, 1.5em 0 0,
+        0 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 2em 1em 0,
+        0 1.5em 0, 0.5em 1.5em 0, 1em 1.5em 0, 1.5em 1.5em 0,
+        0 2em 0,
+        0 2.5em 0,
+        0 3em 0;
+    }
+
+    [data-digit="M"]:before {
+      background-color: currentColor;
+      box-shadow:
+        2em 0 0,
+        0 0.5em 0, 0.5em 0.5em 0, 1.5em 0.5em 0, 2em 0.5em 0,
+        0 1em 0, 1em 1em 0, 2em 1em 0,
+        0 1.5em 0, 1em 1.5em 0, 2em 1.5em 0,
+        0 2em 0, 2em 2em 0,
+        0 2.5em 0, 2em 2.5em 0,
+        0 3em 0, 2em 3em 0;
+    }
+
+    .clock__slash:before {
+      box-shadow:
+        2em 0 0,
+        1.5em 0.5em 0,
+        1.5em 1em 0,
+        1em 1.5em 0,
+        0.5em 2em 0,
+        0.5em 2.5em 0,
+        0 3em 0;
+    }
+
+    .clock__time {
+      background-color: hsl(0, 0%, 0%);
+      display: flex;
+      align-items: center;
+      margin: 0.75em 0.5em;
+      overflow: hidden;
+      width: calc(100% - 1em);
+      height: calc(100% - 1.5em);
+    }
+
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: hsl(var(--hue), 10%, 30%);
+        --fg: hsl(var(--hue), 10%, 90%);
+      }
+
+      .clock {
+        background-color: hsl(var(--hue), 10%, 40%);
+      }
+    }
+
+    /* Animations */
+    @keyframes digitsMarquee {
+      from {
+        transform: translateX(55em);
+      }
+
+      to {
+        transform: translateX(-58.5em);
+      }
+    }
+
+    body .clock {
+      z-index: 97;
+      position: fixed;
+      top: 90%;
+      left: 0.1%;
+      box-sizing: border-box;
+      width: 40%;
+      height: 9%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+
+    #frameChat {
+      position: absolute;
+      top: 130%;
+      left: 6%;
+    }
+
+    #frameChat iframe {
+      width: 700px;
+      /* Cambia este valor según tu preferencia */
+      height: 600px;
+      /* Cambia este valor según tu preferencia */
+    }
+  </style>
+
+  <script>
+    window.console = window.console || function (t) { };
+  </script>
+
+
+</head>
+
+<body translate="no">
+
+  <body class="sidebar-is-reduced">
+    <header class="l-header">
+      <div class="l-header__inner clearfix">
+        <div class="c-header-icon js-hamburger">
+          <div class="hamburger-toggle">
+            <span class="bar-top"></span><span class="bar-mid"></span><span class="bar-bot"></span>
+          </div>
+        </div>
+        <div id="mostrarChatFrame" class="c-header-icon has-dropdown" onclick="alternarBoton()">
+          <span id="contadorNotificaciones" class="c-badge c-badge--red c-badge--header-icon animated swing">13</span>
+          <i class="fa fa-bell"></i>
+        </div>
+        <div id="frameChat" class="oculto">
+          <div class="barra-superior">
+            <div class="botones">
+              <button class="cerrar" onclick="cerrarChat()">Cerrar</button>
+              <button class="minimizar" onclick="minimizarChat()">-</button>
+            </div>
+          </div>
+          <!-- Contenido del chat -->
+        </div>
+        <script>
+          document.getElementById("mostrarChatFrame").addEventListener("click", function () {
+            var frameDiv = document.getElementById("frameChat");
+
+            // Si el frame ya está visible, lo ocultamos
+            if (!frameDiv.classList.contains("oculto")) {
+              frameDiv.classList.add("oculto");
+              return;
+            }
+
+            // URL del contenido que deseas cargar en el frame
+            var urlDelFrame = "https://script.google.com/macros/s/AKfycbw-hM2xvpe9CWBzDY4SZhdlxy_x2DD9QXkQMtRDIA70SogTEvvPR17Hsbd7Gfciy5zwug/exec?p=verificacion";
+
+            // Cargar el contenido en el frame
+            frameDiv.innerHTML = '<iframe src="' + urlDelFrame + '" frameborder="0"></iframe>';
+
+            // Mostrar el frame
+            frameDiv.classList.remove("oculto");
+          });
+        </script>
+
+
+
+
+        <div class="c-search">
+          <input class="c-search__input u-input" placeholder="Search..." type="text" />
+        </div>
+        <div class="header-icons-group">
+          <div class="c-header-icon basket">
+            <span class="c-badge c-badge--blue c-badge--header-icon animated swing">4</span><i
+              class="fa fa-shopping-basket"></i>
+          </div>
+          <!-- Agregar un evento de clic al elemento logout -->
+          <div class="c-header-icon logout" onclick="cerrarSesion()">
+            <i class="fa fa-power-off"></i>
+          </div>
+
+
+
+        </div>
+      </div>
+    </header>
+    <div class="l-sidebar">
+      <div class="logo">
+        <div class="logo__txt">KD</div>
+      </div>
+      <div class="l-sidebar__content">
+        <nav class="c-menu js-menu">
+          <ul class="u-list">  
+            <li id="menu-flights" class="c-menu__item has-submenu" data-toggle="tooltip" title="Flights">
+              <div class="c-menu__item__inner"><i class="fa fa-plane"></i>
+                <div class="c-menu-item__title"><span>Flights</span></div>
+              </div>
+            </li>
+            <li id="menu-modules" class="c-menu__item has-submenu" data-toggle="tooltip" title="Modules">
+              <div class="c-menu__item__inner"><i class="fa fa-puzzle-piece"></i>
+                <div class="c-menu-item__title"><span>Modules</span></div>
+                <div class="c-menu-item__expand js-expand-submenu"><i class="fa fa-angle-down"></i></div>
+              </div>
+              <ul class="c-menu__submenu u-list">
+                <li>Payments</li>
+                <li>Maps</li>
+                <li>Notifications</li>
+              </ul>
+            </li>
+            <li id="menu-statistics" class="c-menu__item has-submenu" data-toggle="tooltip" title="Statistics">
+              <div class="c-menu__item__inner"><i class="far fa-chart-bar"></i>
+                <div class="c-menu-item__title"><span>Statistics</span></div>
+              </div>
+            </li>
+            <li id="menu-gifts" class="c-menu__item has-submenu" data-toggle="tooltip" title="Gifts">
+              <div class="c-menu__item__inner"><i class="fa fa-gift"></i>
+                <div class="c-menu-item__title"><span>Gifts</span></div>
+              </div>
+            </li>
+            <li id="menu-settings" class="c-menu__item has-submenu" data-toggle="tooltip" title="Ajustes">
+              <div class="c-menu__item__inner"><i class="fa fa-cogs"></i>
+                <div class="c-menu-item__title"><span>Ajustes</span></div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </body>
+  <main class="l-main">
+    <div id="content-OCULTO" class="content-wrapper content-wrapper--with-bg active">
+      HOLA SOU NUEVO
+    </div>
+    <div id="content-flights" class="content-wrapper content-wrapper--with-bg">
+      <h1 class="page-title">Dashboard</h1>
+      <div class="page-content">Content goes here</div>
+    </div>
+    <div id="content-modules" class="content-wrapper content-wrapper--with-bg">
+      <h1 class="page-title">Modules</h1>
+      <div class="page-content">Modules content goes here</div>
+    </div>
+    <div id="content-statistics" class="content-wrapper content-wrapper--with-bg">
+      <h1 class="page-title">Statistics</h1>
+      <div class="page-content">Statistics content goes here</div>
+    </div>
+    <div id="content-gifts" class="content-wrapper content-wrapper--with-bg">
+      <h1 class="page-title">Gifts</h1>
+      <div class="page-content">Gifts content goes here</div>
+    </div>
+    <div id="content-settings" class="content-wrapper content-wrapper--with-bg">
+      <h1 class="page-title">Ajustes</h1>
+      <div class="page-content" id="seccionAjustes">Settings content goes here</div>
+    </div>
+  </main>
+
+  <script>
+    // JavaScript to handle menu clicks and update content visibility
+    const menuItems = document.querySelectorAll('.c-menu__item');
+    const contentWrappers = document.querySelectorAll('.content-wrapper');
+
+    menuItems.forEach(item => {
+      item.addEventListener('click', function () {
+        const targetId = 'content-' + this.id.split('-')[1];
+        updateContent(targetId);
+      });
+    });
+
+    function updateContent(targetId) {
+      contentWrappers.forEach(wrapper => {
+        if (wrapper.id === targetId) {
+          wrapper.classList.add('active');
+        } else {
+          wrapper.classList.remove('active');
+        }
+      });
+    }
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+  <script src='https://use.fontawesome.com/releases/v5.0.8/js/all.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script id="rendered-js">
+    let Dashboard = (() => {
+      let global = {
+        tooltipOptions: {
+          placement: "right"
+        },
+
+        menuClass: ".c-menu"
+      };
+
+
+      let menuChangeActive = el => {
+        let hasSubmenu = $(el).hasClass("has-submenu");
+        $(global.menuClass + " .is-active").removeClass("is-active");
+        $(el).addClass("is-active");
+
+        // if (hasSubmenu) {
+        // 	$(el).find("ul").slideDown();
+        // }
+      };
+
+      let sidebarChangeWidth = () => {
+        let $menuItemsTitle = $("li .menu-item__title");
+
+        $("body").toggleClass("sidebar-is-reduced sidebar-is-expanded");
+        $(".hamburger-toggle").toggleClass("is-opened");
+
+        if ($("body").hasClass("sidebar-is-expanded")) {
+          $('[data-toggle="tooltip"]').tooltip("destroy");
+        } else {
+          $('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
+        }
+
+      };
+
+      return {
+        init: () => {
+          $(".js-hamburger").on("click", sidebarChangeWidth);
+
+          $(".js-menu li").on("click", e => {
+            menuChangeActive(e.currentTarget);
+          });
+
+          $('[data-toggle="tooltip"]').tooltip(global.tooltipOptions);
+        }
+      };
+
+    })();
+
+    Dashboard.init();
+    //# sourceURL=pen.js
+  </script>
+
+  <div class="clock" role="img">
+    <div class="clock__time">
+      <div class="clock__digits">
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="1"></div>
+        <div class="clock__slash"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="1"></div>
+        <div class="clock__slash"></div>
+        <div class="clock__digit" data-digit="1"></div>
+        <div class="clock__digit" data-digit="9"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__space"></div>
+        <div class="clock__digit" data-digit="1"></div>
+        <div class="clock__digit" data-digit="2"></div>
+        <div class="clock__colon"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__colon"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="0"></div>
+        <div class="clock__digit" data-digit="A"></div>
+        <div class="clock__digit" data-digit="M"></div>
+      </div>
+    </div>
+  </div>
+
+  <script id="rendered-js">
+    window.addEventListener("DOMContentLoaded", () => {
+      const c = new Clock18(".clock");
+    });
+
+    class Clock18 {
+      constructor(el) {
+        this.el = document.querySelector(el);
+
+        this.init();
+      }
+      init() {
+        this.timeUpdate();
+      }
+      get datetimeAsObject() {
+        const date = new Date();
+        const Y = date.getFullYear();
+        const M = date.getMonth() + 1;
+        const D = date.getDate();
+        const h = date.getHours();
+        const m = date.getMinutes();
+        const s = date.getSeconds();
+
+        return { Y, M, D, h, m, s };
+      }
+      get datetimeAsString() {
+        const [Mt, Mo, Dt, Do, Yth, Yh, Yt, Yo, ht, ho, mt, mo, st, so, ap, m] = this.datetimeDigits;
+        const date = `${Mt}${Mo}/${Dt}${Do}/${Yth}${Yh}${Yt}${Yo}`;
+        const time = `${ht}${ho}:${mt}${mo}:${st}${so} ${ap}${m}`;
+
+        return `${date} ${time}`.trim();
+      }
+      get datetimeDigits() {
+        let { Y, M, D, h, m, s } = this.datetimeAsObject;
+        // year
+        const YYYY = `${Y}`.split("");
+        // month
+        let MM = `${M}`.split("");
+        if (M < 10) MM.unshift(" ");
+        // day
+        let DD = `${D}`.split("");
+        if (D < 10) DD.unshift(" ");
+        // meridiem
+        const ap = h > 11 ? "P" : "A";
+        if (h > 12) h -= 12;
+        if (h === 0) h = 12;
+        // hour
+        let hh = `${h}`.split("");
+        if (h < 10) hh.unshift(" ");
+        // minute
+        let mm = `${m}`.split("");
+        if (m < 10) mm.unshift("0");
+        // second
+        let ss = `${s}`.split("");
+        if (s < 10) ss.unshift("0");
+
+        return [...DD, ...MM, ...YYYY, ...hh, ...mm, ...ss, ap, "M"];
+      }
+      timeUpdate() {
+        // update the `title`
+        this.el?.setAttribute("title", this.datetimeAsString);
+        // update the digits
+        this.datetimeDigits.forEach((digit, i) => {
+          const digitEl = this.el.querySelectorAll("[data-digit]")[i];
+          if (!digitEl) return;
+
+          digitEl.setAttribute("data-digit", digit);
+        });
+        // loop
+        clearTimeout(this.timeUpdateLoop);
+        this.timeUpdateLoop = setTimeout(this.timeUpdate.bind(this), 1e3);
+      }
+    }
+    //# sourceURL=pen.js
+  </script>
+
+
+  <script>
+    window.onload = function () {
+      // Obtener los datos del usuario del sessionStorage
+      var nombre = sessionStorage.getItem('nombre');
+      var usuario = sessionStorage.getItem('usuario');
+      var email = sessionStorage.getItem('email');
+
+      // Crear un nuevo contenido con los datos del usuario
+      var nuevoContenido = 'Bienvenido: Nombre: ' + nombre + '<br>Usuario: ' + usuario + '<br>Email: ' + email;
+
+      // Seleccionar el elemento con la clase "page-title"
+      var pageContent = document.querySelector('.page-title');
+      // Reemplazar el contenido del elemento con los datos del usuario
+      pageContent.innerHTML = nuevoContenido;
+
+      // Seleccionar el elemento con el id "seccionAjustes"
+      var seccionAjustes = document.getElementById('seccionAjustes');
+      // Reemplazar el contenido del elemento con los datos del usuario
+      seccionAjustes.innerHTML = nuevoContenido;
+
+      // Llamar a la función activarUsuario en el backend
+      google.script.run.activarUsuario(usuario);
+    };
+
+
+    function cerrarSesion() {
+        window.location.href = 'prueba-seguridad.html';
+      // Obtener los datos del usuario del sessionStorage
+      var nombre = sessionStorage.getItem('nombre');
+      var usuario = sessionStorage.getItem('usuario');
+      var email = sessionStorage.getItem('email');
+
+      // Eliminar todo el contenido HTML actual
+      document.documentElement.innerHTML = '';
+
+      // Cargar el contenido de verificacion.html
+      google.script.run.withSuccessHandler(function (content) {
+        document.open();
+        document.write(content);
+        document.close();
+      }).getVerificacionHTML();
+
+      // Llamar a la función desactivarUsuario en el backend
+      google.script.run.desactivarUsuario(usuario);
+    }
+  </script>
+</body>
+
+</html>

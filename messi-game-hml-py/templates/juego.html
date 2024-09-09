@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      background: url('/img/fondo_amor.jpg') no-repeat center center;
+      background-size: cover;
+    }
+    #gameArea {
+      width: 700px;
+      height: 700px;
+      position: relative;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    #back {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+    }
+    .player, .bullet, .enemy, .bonus, .bulletBalaFuerte {
+      position: absolute;
+    }
+    .player {
+      width: 60px;
+      height: 60px;
+      background: url('/img/messi.png') no-repeat center center;
+      background-size: cover;
+    }
+    .bullet {
+      width: 50px;
+      height: 50px;
+      background: url('/img/corazón.png') no-repeat center center;
+      background-size: cover;
+    }
+    .bulletBalaFuerte {
+      width: 50px;
+      height: 50px;
+      background: url('https://cdn.imgbin.com/14/14/14/imgbin-new-super-mario-bros-u-bullet-8QRjUCrcvgWTVVZE5pjwSquNx.jpg') no-repeat center center;
+      background-size: cover;
+    }
+    .enemy {
+      width: 60px;
+      height: 60px;
+      background: url('/img/antonela.png') no-repeat center center;
+      background-size: cover;
+    }
+    .bonus {
+      width: 60px;
+      height: 60px;
+      background: url('https://static6.depositphotos.com/1005979/554/i/450/depositphotos_5541896-stock-photo-bonus-word-on-green-button.jpg') no-repeat center center;
+      background-size: cover;
+    }
+    #notification {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    #counter {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <button id="back" onclick="back()" class="btn btn-warning">volver atras</button>
+  
+  <button id="boton" onclick="irAJugar()">prueba-seguridad </button>
+  <script type="text/javascript">
+    function irAJugar() {
+        window.location.href = "prueba-seguridad.html";  // Asegúrate de que la ruta es correcta
+    }
+</script>
+  <script type="text/javascript">
+    function back() {
+        window.location.href = "index.html";  // Asegúrate de que la ruta es correcta
+    }
+</script>
+  <div id="gameArea">
+    <div id="player" class="player"></div>
+    <div id="notification">¡Juego terminado!</div>
+    <div id="counter">Balas Fuertes: 0</div>
+  </div>
+  <script>
+    const gameArea = document.getElementById('gameArea');
+    const playerElement = document.getElementById('player');
+    const notification = document.getElementById('notification');
+    const counter = document.getElementById('counter');
+    
+    const player = {
+      element: playerElement,
+      x: gameArea.clientWidth / 2 - 30,
+      y: gameArea.clientHeight - 70,
+      width: 60,
+      height: 60,
+      speed: 5
+    };
+    
+    const bullets = [];
+    const bulletSpeed = 5;
+    const bulletsBalasFuertes = [];
+    const bulletsBalasFuertesSpeed = 5;
+    
+    const enemies = [];
+    const enemySpeed = 3;
+    const bonusBalaFuerte = [];
+    const bonusBalasFuerteSpeed = 3;
+    
+    let balaFuerteCount = 0;
+    
+    const keysPressed = { left: false, right: false };
+    
+    player.element.style.left = `${player.x}px`;
+    player.element.style.top = `${player.y}px`;
+    
+    const backgroundMusic = new Audio('/audio/cuandoMeEnamoro.mp3');
+    backgroundMusic.volume = 0.1;
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+    
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') keysPressed.left = true;
+      if (e.key === 'ArrowRight') keysPressed.right = true;
+      if (e.key === ' ') {
+        // Disparo de bala normal
+        const bulletElement = document.createElement('div');
+        bulletElement.className = 'bullet';
+        bulletElement.style.left = `${player.x + player.width / 2 - 25}px`;
+        bulletElement.style.top = `${player.y}px`;
+        gameArea.appendChild(bulletElement);
+        bullets.push({ element: bulletElement, x: player.x + player.width / 2 - 25, y: player.y, width: 50, height: 50 });
+      }
+    
+      if (e.key === 'z' && balaFuerteCount > 0) {
+        // Disparo de dos balas fuertes
+        for (let i = 0; i < 2; i++) {
+          const balaFuerteElement = document.createElement('div');
+          balaFuerteElement.className = 'bulletBalaFuerte';
+          balaFuerteElement.style.left = `${player.x + player.width / 2 - 25}px`;
+          balaFuerteElement.style.top = `${player.y}px`;
+          gameArea.appendChild(balaFuerteElement);
+          bulletsBalasFuertes.push({ element: balaFuerteElement, x: player.x + player.width / 2 - 25, y: player.y, width: 50, height: 50, hits: 0 });
+        }
+        balaFuerteCount--; // Descuenta solo un punto
+        updateCounter();
+      }
+    });
+    
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft') keysPressed.left = false;
+      if (e.key === 'ArrowRight') keysPressed.right = false;
+    });
+    
+    function updateCounter() {
+      counter.textContent = `Balas Fuertes: ${balaFuerteCount}`;
+    }
+    
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 2000); // Ocultar después de 2 segundos
+    }
+    
+    function gameLoop() {
+      if (keysPressed.left && player.x > 0) player.x -= player.speed;
+      if (keysPressed.right && player.x < gameArea.clientWidth - player.width) player.x += player.speed;
+    
+      player.element.style.left = `${player.x}px`;
+    
+      // Actualización y colisión de balas normales
+      bullets.forEach((bullet, index) => {
+        bullet.y -= bulletSpeed;
+        if (bullet.y < 0) {
+          gameArea.removeChild(bullet.element);
+          bullets.splice(index, 1);
+        } else {
+          bullet.element.style.top = `${bullet.y}px`;
+        }
+    
+        enemies.forEach((enemy, enemyIndex) => {
+          if (bullet.x < enemy.x + enemy.width &&
+              bullet.x + bullet.width > enemy.x &&
+              bullet.y < enemy.y + enemy.height &&
+              bullet.y + bullet.height > enemy.y) {
+            
+            // Eliminar el enemigo
+            gameArea.removeChild(enemy.element);
+            enemies.splice(enemyIndex, 1);
+            
+            // Eliminar la bala normal
+            gameArea.removeChild(bullet.element);
+            bullets.splice(index, 1);
+          }
+        });
+      });
+    
+      // Actualización y colisión de balas fuertes
+      bulletsBalasFuertes.forEach((balaFuerte, index) => {
+        balaFuerte.y -= bulletsBalasFuertesSpeed;
+        if (balaFuerte.y < 0) {
+          gameArea.removeChild(balaFuerte.element);
+          bulletsBalasFuertes.splice(index, 1);
+        } else {
+          balaFuerte.element.style.top = `${balaFuerte.y}px`;
+        }
+    
+        // Colisión de balas fuertes con enemigos
+        let enemiesToRemove = [];
+        enemies.forEach((enemy, enemyIndex) => {
+          if (balaFuerte.x < enemy.x + enemy.width &&
+              balaFuerte.x + balaFuerte.width > enemy.x &&
+              balaFuerte.y < enemy.y + enemy.height &&
+              balaFuerte.y + balaFuerte.height > enemy.y) {
+            
+            balaFuerte.hits++;
+            enemiesToRemove.push(enemyIndex);
+            
+            if (balaFuerte.hits >= 2) {
+              // Eliminar hasta dos enemigos
+              enemiesToRemove.slice(0, 2).forEach((enemyIndex) => {
+                gameArea.removeChild(enemies[enemyIndex].element);
+                enemies.splice(enemyIndex, 1);
+              });
+              
+              // Eliminar la bala fuerte
+              gameArea.removeChild(balaFuerte.element);
+              bulletsBalasFuertes.splice(index, 1);
+            }
+          }
+        });
+      });
+    
+      // Generar enemigos
+      if (Math.random() < 0.05) {
+        const enemyElement = document.createElement('div');
+        enemyElement.className = 'enemy';
+        const enemyX = Math.random() * (gameArea.clientWidth - 60);
+        enemyElement.style.left = `${enemyX}px`;
+        enemyElement.style.top = `0px`;
+        gameArea.appendChild(enemyElement);
+        enemies.push({ element: enemyElement, x: enemyX, y: 0, width: 60, height: 60 });
+      }
+  
+      // Actualización y colisión de enemigos
+      enemies.forEach((enemy, index) => {
+        enemy.y += enemySpeed;
+        if (enemy.y > gameArea.clientHeight) {
+          gameArea.removeChild(enemy.element);
+          enemies.splice(index, 1);
+        } else {
+          enemy.element.style.top = `${enemy.y}px`;
+        }
+  
+        if (player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y) {
+          showNotification('¡Colisión con enemigo!');
+          return; // Salir de la función para evitar más actualizaciones
+        }
+      });
+    
+      // Generar bonus de balas fuertes
+      if (Math.random() < 0.003) {
+        const bonusElement = document.createElement('div');
+        bonusElement.className = 'bonus';
+        const bonusX = Math.random() * (gameArea.clientWidth - 60);
+        bonusElement.style.left = `${bonusX}px`;
+        bonusElement.style.top = `0px`;
+        gameArea.appendChild(bonusElement);
+        bonusBalaFuerte.push({ element: bonusElement, x: bonusX, y: 0, width: 60, height: 60 });
+      }
+    
+      // Actualización y colisión de bonus de balas fuertes
+      bonusBalaFuerte.forEach((bonus, index) => {
+        bonus.y += bonusBalasFuerteSpeed;
+        if (bonus.y > gameArea.clientHeight) {
+          gameArea.removeChild(bonus.element);
+          bonusBalaFuerte.splice(index, 1);
+        } else {
+          bonus.element.style.top = `${bonus.y}px`;
+        }
+    
+        if (player.x < bonus.x + bonus.width &&
+            player.x + player.width > bonus.x &&
+            player.y < bonus.y + bonus.height &&
+            player.y + player.height > bonus.y) {
+          showNotification('¡Colisión con el bonus!');
+          balaFuerteCount++;
+          updateCounter();
+          gameArea.removeChild(bonus.element);
+          bonusBalaFuerte.splice(index, 1);
+        }
+      });
+    
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  </script>
+  
+</body>
+
+</html>

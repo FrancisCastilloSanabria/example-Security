@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+
+  <link rel="apple-touch-icon" type="image/png"
+    href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+  <meta name="apple-mobile-web-app-title" content="CodePen">
+
+  <link rel="shortcut icon" type="image/x-icon"
+    href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+  <link rel="mask-icon" type="image/x-icon"
+    href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg"
+    color="#111" />
+
+  <title>Messi Love The Game</title>
+
+  <link rel="canonical" href="https://codepen.io/SolPastocchi1/pen/zYqXrBG">
+
+
+  <style>
+    html {
+      font-size: 15px;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .referer-warning {
+      background: black;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      padding: 0.75em;
+      color: white;
+      text-align: center;
+      font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, system-ui, Sans-Serif;
+      line-height: 1.2;
+      font-size: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .referer-warning span {
+      font-family: initial;
+    }
+
+    .referer-warning h1 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .referer-warning a {
+      color: #56bcf9;
+    }
+  </style>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("https://i.imgur.com/NxXa2bY.png%27");
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    /* sonic con animaciones */
+    #sonic {
+      position: absolute;
+      top: 53%;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      width: calc(1516px / 7);
+      height: 300px;
+      background: url(https://res.cloudinary.com/di9h6cniw/image/upload/v1721757106/Captura_de_pantalla_2024-07-23_125036-removebg-preview_mafwvq.png);
+      background-size: cover;
+      animation: move 15s linear infinite;
+      z-index: -1;
+    }
+
+    /* Animación "move" */
+    @keyframes move {
+      0% {
+        left: -5%;
+        transform: rotate(-360deg);
+      }
+
+      50% {
+        left: 93%;
+        transform: rotate(360deg);
+      }
+
+      100% {
+        left: -5%;
+        transform: rotate(-360deg);
+      }
+    }
+
+    /* boton de play */
+    #boton {
+      top: 20%;
+      left: 30%;
+      position: absolute;
+      width: 30%;
+      height: 20%;
+      font-size: 900%;
+      font-family: 'Press Start 2P', cursive;
+      color: gainsboro;
+    }
+
+    #boton:hover {
+      text-shadow: 10px 10px black;
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .nav {
+      position: absolute;
+      width: 200px;
+      height: 100vh;
+      top: 0;
+      left: -220px;
+      /*Ocultar menú*/
+      padding-top: 47px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-right: 4px solid rgba(58, 83, 155, 1);
+      transition: all .5s ease;
+    }
+
+    /*Estilos de los li del menú*/
+    .nav__item {
+      display: block;
+      width: 96%;
+      margin: 0 auto;
+      line-height: 5;
+      position: relative;
+      background-color: transparent;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.0rem;
+      text-align: center;
+      color: rgba(221, 231, 228, 1);
+    }
+
+    /*Triángulo*/
+    .current:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-top: 17px solid transparent;
+
+      top: 0px;
+      right: -15px;
+    }
+
+    /*Borde del triángulo*/
+    .current:after {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-top: 16.5px solid transparent;
+      border-left: 17px solid rgba(58, 83, 155, 1);
+      border-bottom: 15px solid transparent;
+      top: .5px;
+      right: -21px;
+      z-index: 1;
+    }
+
+    /*Estilos Menú que abre y cierra*/
+    .menu-toogle {
+      position: absolute;
+      width: 35px;
+      line-height: 1.1;
+      text-align: center;
+      top: 6.5px;
+      left: 8px;
+      border-radius: 3px;
+      background-color: #5F0000;
+      transition: all .5s ease;
+      z-index: 10;
+    }
+
+    /*Estilos engranaje*/
+    .menu-toogle::before {
+      content: "⚙️";
+      font-size: 45px;
+      background-color: black;
+    }
+
+
+
+    .checkbox {
+      display: none;
+    }
+
+    .checkbox:checked~.nav {
+      left: 0px;
+      position: fixed;
+    }
+
+    .checkbox:checked~.main-w {
+      margin-left: 200px;
+    }
+
+    .checkbox:checked~.menu-toogle {
+      left: 208px;
+      position: fixed;
+    }
+
+    .menu-toogle:hover {
+      cursor: pointer;
+
+    }
+  </style>
+
+  <script>
+    window.console = window.console || function (t) { };
+  </script>
+
+
+
+</head>
+
+<body translate="no">
+  <html>
+
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <input type="checkbox" class="checkbox" id="menu-toogle" />
+    <!-- <audio hidden controls autoplay loop src="audio/Title Theme - The Legend of Zelda Ocarina of Time.mp3"></audio> -->
+    <label for="menu-toogle" class="menu-toogle"></label>
+    <nav class="nav">
+      <a href="#" class="nav__item current">Graphics</a>
+      <a href="#" class="nav__item">Volume</a>
+      <a href="#" class="nav__item">Characters</a>
+      <a href="#" class="nav__item">Load game</a>
+
+    </nav>
+    <div id="sonic"></div>
+    <div id="boton">
+      PLAY
+    </div>
+  </body>
+
+  </html>
+
+
+
+</body>
+
+</html>
